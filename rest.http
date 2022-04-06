@@ -12,6 +12,20 @@ GET http://localhost:3000/flowers/
 
 ###
 
+DELETE http://localhost:3000/flowers/624d65e4999c5954c9e9e4b6 HTTP/1.1
+
+###
+
+PUT http://localhost:3000/flowers/624c57f5cb85cf48053a3e9e HTTP/1.1
+Content-Type: application/json
+
+{
+	"name": "new name",
+	"price": 2
+}
+
+###
+
 POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
@@ -45,5 +59,4 @@ GET http://localhost:3000/api/v1/movies/6225d54b3fbb800c3d04c9f2
 DELETE http://localhost:3000/api/v1/movies/6225d54b3fbb800c3d04c9f2
 ###
 
-DELETE http://localhost:3000/users/1 HTTP/1.1
 

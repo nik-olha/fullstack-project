@@ -10,11 +10,11 @@ import {
 
 const router = express.Router()
 
-// Every path we define here will get /api/v1/movies prefix
+// Every path we define here will get /flowers
 router.get('/', findAll)
-router.get('/:flowerId', findById)
-router.put('/:flowerId', updateFlower)
-router.delete('/:flowerId', deleteFlower)
+router.get('/:userId', findById)
+router.put('/:userId', updateFlower)
+router.delete('/:userId', deleteFlower)
 router.post('/create', createFlower)
 
 export default router

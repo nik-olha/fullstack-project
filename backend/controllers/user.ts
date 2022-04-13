@@ -100,3 +100,22 @@ export const updateUser = async (
       }
     }
   }
+
+
+  export const addFlowers = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+        const userId = req.params.userId
+        const flowerId = req.params.flowerId
+        const updateUser = await UserService.addFlowers(userId,flowerId)
+        res.json(updateUser)
+    } catch (error) {
+      if (error instanceof Error && error.name == 'ValidationError') {
+        next(new BadRequestError('Invalid Request', error))
+      } else {
+        next(error)
+      }
+    }}

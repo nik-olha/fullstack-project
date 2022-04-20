@@ -1,5 +1,4 @@
 import { NotFoundError } from "../helpers/apiError"
-import user from "../models/user"
 import User, { UserDocument } from "../models/user"
 
 const create = async (user: UserDocument): Promise<UserDocument> => {

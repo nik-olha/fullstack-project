@@ -7,6 +7,7 @@ import {
   findAll,
   updateUser,
   addFlowers,
+  loginUser,
 } from '../controllers/user'
 
 const router = express.Router()
@@ -17,6 +18,7 @@ router.get('/:userId', findById)
 router.put('/:userId', updateUser)
 router.delete('/:userId', deleteUser)
 router.post('/create', createUser)
+router.post('/login', loginUser)
 router.patch('/:userId/flowers/:flowerId', addFlowers)
 
 export default router

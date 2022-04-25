@@ -36,6 +36,24 @@ Content-Type: application/json
 	"flowers": "k"
 }
 ###
+POST http://localhost:3000/user/create HTTP/1.1
+Content-Type: application/json
+
+{
+	"name": "olha",
+	"email": "olha7@gmail.com",
+	"admin": false,
+	"password": "helloword"
+}
+
+###
+POST http://localhost:3000/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+	"email": "olha7@gmail.com",
+	"password": "helloword"
+}
 
 ###
 GET http://localhost:3000/user/

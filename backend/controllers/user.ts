@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import { BadRequestError } from '../helpers/apiError'
+import { BadRequestError, InternalServerError, NotFoundError } from '../helpers/apiError'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { JWT_SECRET } from '../util/secret'
 import User from '../models/user'
 import UserService from '../services/user'
 
@@ -10,12 +13,19 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { name, email, admin } = req.body
+    const { name, email, admin, password } = req.body
+
+    const isUserExist = await UserService.findUserbyEmail(email)
+    if (isUserExist)
+      return res.status(400).json({error: 'User already exist'})
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
 
     const user = new User({
       name,
       email,
-      admin
+      admin,
+      password: hashedPassword
     })
 
     await UserService.create(user)
@@ -24,7 +34,7 @@ export const createUser = async (
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
-      next(error)
+      next(new InternalServerError('Internal Server Error', error))
     }
   }
 }
@@ -119,3 +129,27 @@ export const updateUser = async (
         next(error)
       }
     }}
+
+    export const loginUser = async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ) => {
+      try {
+      const {email, password} = req.body
+        const user = await UserService.findUserbyEmail(email)
+        if(user){
+          const isCorrectPassword = await bcrypt.compare(password, user.password)
+          if(!isCorrectPassword){
+            return next(new BadRequestError('Password is Incorect'))
+          }
+          const token = jwt.sign({userId: user._id, email: user.email}, JWT_SECRET)
+          res.json({token, user})
+        } else {
+          next(new NotFoundError('User email does not exist'))
+        }
+      }
+      catch(error){
+        next(new InternalServerError('Internal Server Error'))
+      }
+    }

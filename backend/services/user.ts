@@ -5,6 +5,11 @@ const create = async (user: UserDocument): Promise<UserDocument> => {
     return user.save()
 }
 
+async function findUserbyEmail(email?: string): Promise<UserDocument | null>{
+    const user = await User.findOne({email})
+    return user
+}
+
 const findById = async (userId: string): Promise<UserDocument> => {
     const foundUser = await User.findById(userId)
 
@@ -59,6 +64,7 @@ const addFlowers = async (userId: string, flowerId: string): Promise<UserDocumen
 
 export default {
     create,
+    findUserbyEmail,
     findById,
     findAll,
     update,

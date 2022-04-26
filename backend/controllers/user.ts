@@ -143,7 +143,8 @@ export const updateUser = async (
           if(!isCorrectPassword){
             return next(new BadRequestError('Password is Incorect'))
           }
-          const token = jwt.sign({userId: user._id, email: user.email}, JWT_SECRET)
+          const token = jwt.sign({userId: user._id, email: user.email}, 
+            JWT_SECRET, {expiresIn: '1hr'})
           res.json({token, user})
         } else {
           next(new NotFoundError('User email does not exist'))

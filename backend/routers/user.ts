@@ -1,4 +1,5 @@
 import express from 'express'
+import passport from 'passport'
 
 import {
   createUser,
@@ -13,7 +14,7 @@ import {
 const router = express.Router()
 
 // Every path we define here will get /user
-router.get('/', findAll)
+router.get('/', passport.authenticate('jwt',{session:false}), findAll)
 router.get('/:userId', findById)
 router.put('/:userId', updateUser)
 router.delete('/:userId', deleteUser)

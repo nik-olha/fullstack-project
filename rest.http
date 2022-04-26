@@ -57,7 +57,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/user/
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjY2ZWIzMWE0M2VlYzY0YzdlYmZiNjYiLCJlbWFpbCI6Im9saGE3QGdtYWlsLmNvbSIsImlhdCI6MTY1MDk2ODQ4NX0.0yIsQ62IOdaAroErKWgByGUP-j_3HMHEaMS2jWYTQoE
 
 ###
 DELETE http://localhost:3000/user/
@@ -73,5 +73,3 @@ Content-Type: application/json
 	"flowers": "k"
 }
 ###
-
-

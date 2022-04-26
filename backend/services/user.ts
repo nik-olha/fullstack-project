@@ -21,7 +21,7 @@ const findById = async (userId: string): Promise<UserDocument> => {
 }
 
 const findAll = async (): Promise<UserDocument[]> => {
-    return User.find().populate('flowers');
+    return User.find().populate('flowers').select('-password');
 }
 
 const update = async (

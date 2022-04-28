@@ -1,28 +1,63 @@
 import { Request, Response, NextFunction } from 'express'
+
+import Order from '../models/Order'
+import OrderService from '../services/order'
 import { BadRequestError } from '../helpers/apiError'
-import Flower from '../models/flowers'
-import FlowerService from '../services/flowers'
 
-// POST /flowers
-export const createFlower = async (
+// POST /orders
+export const createOrder = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { name, price, description, color, imageURL, instock } = req.body
-
-    const flower = new Flower({
-      name,
-      price,
-      description,
-      color,
-      instock,
-      imageURL,
+    const { orderedlines, totalPrice } = req.body
+    const order = new Order({
+      userId: req.params.userId,
+      orderedlines,
+      totalPrice,
     })
+    await OrderService.createOrder(order)
+    res.json(order)
+  } catch (error) {
+    console.log(error)
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
 
-    await FlowerService.create(flower)
-    res.json(flower)
+// GET /orders for userId
+export const findOrdersForUserId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const response = await OrderService.findOrdersForUserId(req.params.userId)
+    res.json(response)
+  } catch (error) {
+    console.log(error)
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// GET /order by ID
+export const findOrderById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(
+      await OrderService.findOrderById(req.params.userId, req.params.orderId)
+    )
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -32,17 +67,19 @@ export const createFlower = async (
   }
 }
 
-// PUT /flowers/:flowerId
-export const updateFlower = async (
+// PUT /:orderId
+export const updateOrderById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const update = req.body
-    const flowerId = req.params.flowerId
-    const updatedFlower = await FlowerService.update(flowerId, update)
-    res.json(updatedFlower)
+    const updatedOrder = await OrderService.updateOrderById(
+      req.params.userId,
+      req.params.orderId,
+      req.body
+    )
+    res.json(updatedOrder)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -52,49 +89,15 @@ export const updateFlower = async (
   }
 }
 
-// DELETE /flowers/:flowerId
-export const deleteFlower = async (
+// DELETE /:orderId
+export const deleteOrderById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    await FlowerService.deleteFlower(req.params.flowerId)
+    await OrderService.deleteOrderById(req.params.userId, req.params.orderId)
     res.status(204).end()
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(error)
-    }
-  }
-}
-
-// GET /flowers/:flowerId
-export const findById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    res.json(await FlowerService.findById(req.params.flowerId))
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(error)
-    }
-  }
-}
-
-// GET /flowers
-export const findAll = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    res.json(await FlowerService.findAll())
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

@@ -21,7 +21,7 @@ const findById = async (userId: string): Promise<UserDocument> => {
 }
 
 const findAll = async (): Promise<UserDocument[]> => {
-    return User.find().populate('flowers').select('-password');
+    return User.find().populate('faworites').select('-password');
 }
 
 const update = async (
@@ -50,9 +50,9 @@ const deleteUser = async (userId: string): Promise<UserDocument | null> => {
     return foundUser
 }
 
-const addFlowers = async (userId: string, flowerId: string): Promise<UserDocument | null> => {
+const addFavorites = async (userId: string, flowerId: string): Promise<UserDocument | null> => {
     const user = await User.findById(userId)
-    user?.flowers.push(flowerId)
+    user?.favorites.push(flowerId)
 
     if (!user) {
         throw new NotFoundError(`User ${userId} not found`)
@@ -69,5 +69,5 @@ export default {
     findAll,
     update,
     deleteUser,
-    addFlowers,
+    addFavorites,
 }

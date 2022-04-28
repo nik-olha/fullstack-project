@@ -120,7 +120,7 @@ export const updateUser = async (
     try {
         const userId = req.params.userId
         const flowerId = req.params.flowerId
-        const updateUser = await UserService.addFlowers(userId,flowerId)
+        const updateUser = await UserService.addFavorites(userId,flowerId)
         res.json(updateUser)
     } catch (error) {
       if (error instanceof Error && error.name == 'ValidationError') {

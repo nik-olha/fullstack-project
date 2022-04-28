@@ -5,6 +5,7 @@ export type FlowerDocument = Document & {
     price: number
     color: string
     description: string
+    instock: number 
     imageURL: string
 }
 
@@ -12,6 +13,8 @@ const flowerSchema = new mongoose.Schema({
     name: {
         type: String,
         index: true,
+        required: true,
+        unique: true,
     },
     price: {
         type: Number,
@@ -23,6 +26,10 @@ const flowerSchema = new mongoose.Schema({
     },
     color: {
         type: String,
+    },
+    instock: {
+        type: Number,
+        required: true,
     },
     imageURL: { String }
 })

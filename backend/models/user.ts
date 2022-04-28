@@ -5,13 +5,14 @@ export type UserDocument = Document & {
     email: string
     admin: boolean
     password: string
-    flowers: string[] 
+    favorites: string[] 
 }
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         index: true,
+        required: true,
     },
     email: {
         type: String,
@@ -21,8 +22,8 @@ const userSchema = new mongoose.Schema({
     admin: {
         type: Boolean
     }, 
-    password: {type: String},
-    flowers: [{
+    password: {type: String, required: true},
+    favorites: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'Flower'
     }]
 })

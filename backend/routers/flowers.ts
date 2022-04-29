@@ -12,9 +12,9 @@ const router = express.Router()
 
 // Every path we define here will get /flowers
 router.get('/', findAll)
-router.get('/:userId', findById)
-router.put('/:userId', updateFlower)
-router.delete('/:userId', deleteFlower)
+router.get('/:flowerId', findById)
+router.put('/:flowerId', updateFlower)
+router.delete('/:flowerId', deleteFlower)
 router.post('/create', createFlower)
 
 export default router

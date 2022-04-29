@@ -2,7 +2,7 @@ POST http://localhost:3000/flowers/create HTTP/1.1
 Content-Type: application/json
 
 {
-	"name": "Tulip4",
+	"name": "Tulip5",
 	"price": 2,
 	"instock": 4
 }
@@ -10,6 +10,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/flowers/
+
 
 ###
 

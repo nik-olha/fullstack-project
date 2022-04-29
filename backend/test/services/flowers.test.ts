@@ -35,7 +35,7 @@ describe('flower service', () => {
     const flower = await createFlower()
     expect(flower).toHaveProperty('_id')
     expect(flower).toHaveProperty('name', 'Red head')
-    expect(flower).toHaveProperty('price', 90)
+    expect(flower).toHaveProperty('price', 4)
   })
 
   it('should get a flower with id', async () => {

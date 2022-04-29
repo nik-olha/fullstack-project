@@ -59,18 +59,18 @@ describe('flower controller', () => {
     expect(res.status).toBe(400)
   })
 
-  it('should get back an existing movie', async () => {
+  it('should get back an existing flower', async () => {
     let res = await createFlower()
     expect(res.status).toBe(200)
 
     const flowerId = res.body._id
-    res = await request(app).get(`/flowers/create/${flowerId}`)
+    res = await request(app).get(`/flowers/${flowerId}`)
 
     expect(res.body._id).toEqual(flowerId)
   })
 
   it('should not get back a non-existing flower', async () => {
-    const res = await request(app).get(`/flowers/create/${nonExistingFlowerId}`)
+    const res = await request(app).get(`/flowers/${nonExistingFlowerId}`)
     expect(res.status).toBe(404)
   })
 
@@ -101,7 +101,7 @@ describe('flower controller', () => {
       price: 4,
     }
 
-    res = await request(app).put(`/flowers/create/${flowerId}`).send(update)
+    res = await request(app).put(`/flowers/${flowerId}`).send(update)
 
     expect(res.status).toEqual(200)
     expect(res.body.name).toEqual('White parrot')
@@ -113,11 +113,11 @@ describe('flower controller', () => {
     expect(res.status).toBe(200)
     const flowerId = res.body._id
 
-    res = await request(app).delete(`/flowers/create/${flowerId}`)
+    res = await request(app).delete(`/flowers/${flowerId}`)
 
     expect(res.status).toEqual(204)
 
-    res = await request(app).get(`/flowers/create/${flowerId}`)
+    res = await request(app).get(`/flowers/${flowerId}`)
     expect(res.status).toBe(404)
   })
 })

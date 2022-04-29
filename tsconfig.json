@@ -14,5 +14,5 @@
       "*": ["node_modules/*", "backend/types/*"]
     }
   },
-  "include": ["backend/**/*"]
+  "include": ["backend/**/*", "jest.config.js"]
 }

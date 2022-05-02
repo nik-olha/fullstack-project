@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 
 import flowerRouter from './routers/flowers'
 import userRouter from './routers/user'
+import orderLineRouter from './routers/orderlne'
+import orderRouter from './routers/order'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import { jwtStrategy } from './config/passport'
@@ -25,8 +27,14 @@ app.use('/flowers', flowerRouter)
 // Use user router
 app.use('/user', userRouter)
 
+// Use orderline router
+app.use('/orderLines', orderLineRouter)
+
+// Use orders router
+app.use('/orders', orderRouter)
+
+
 // Custom API error handler
 app.use(apiErrorHandler)
-
 
 export default app

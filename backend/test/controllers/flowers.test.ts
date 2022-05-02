@@ -102,7 +102,6 @@ describe('flower controller', () => {
     }
 
     res = await request(app).put(`/flowers/${flowerId}`).send(update)
-    console.log(res.status)
     expect(res.status).toBe(200)
     
     expect(res.body.name).toEqual('Black parrot')

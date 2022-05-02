@@ -26,6 +26,7 @@ const create = async (flower: FlowerDocument): Promise<FlowerDocument> => {
     const foundFlower = await Flower.findByIdAndUpdate(flowerId, update, {
       new: true,
     })
+    const flowers = await findAll()
   
     if (!foundFlower) {
       throw new NotFoundError(`Flower ${flowerId} not found`)
@@ -52,3 +53,4 @@ const create = async (flower: FlowerDocument): Promise<FlowerDocument> => {
     update,
     deleteFlower,
   }
+  

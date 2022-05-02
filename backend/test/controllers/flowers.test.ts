@@ -97,14 +97,15 @@ describe('flower controller', () => {
 
     const flowerId = res.body._id
     const update = {
-      name: 'White parrot',
+      name: 'Black parrot',
       price: 4,
     }
 
     res = await request(app).put(`/flowers/${flowerId}`).send(update)
-
-    expect(res.status).toEqual(200)
-    expect(res.body.name).toEqual('White parrot')
+    console.log(res.status)
+    expect(res.status).toBe(200)
+    
+    expect(res.body.name).toEqual('Black parrot')
     expect(res.body.price).toEqual(4)
   })
 

@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express'
-
 import { BadRequestError } from '../helpers/apiError'
 
 export default function (req: Request, res: Response, next: NextFunction) {

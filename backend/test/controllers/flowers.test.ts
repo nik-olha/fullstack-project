@@ -1,8 +1,7 @@
 import request from 'supertest'
-
-import { FlowerDocument } from '../../models/flowers'
 import app from '../../app'
 import connect, { MongodHelper } from '../db-helper'
+import { FlowerDocument } from '../../models/flowers'
 
 const nonExistingFlowerId = '5e57b77b5744fa0b461c7906'
 
@@ -15,11 +14,9 @@ async function createFlower(override?: Partial<FlowerDocument>) {
     instock: 50,
     imageURL: 'No image attached',
   }
-
   if (override) {
     flower = { ...flower, ...override }
   }
-
   return await request(app).post('/flowers/create').send(flower)
 }
 
@@ -62,10 +59,8 @@ describe('flower controller', () => {
   it('should get back an existing flower', async () => {
     let res = await createFlower()
     expect(res.status).toBe(200)
-
     const flowerId = res.body._id
     res = await request(app).get(`/flowers/${flowerId}`)
-
     expect(res.body._id).toEqual(flowerId)
   })
 
@@ -103,7 +98,6 @@ describe('flower controller', () => {
 
     res = await request(app).put(`/flowers/${flowerId}`).send(update)
     expect(res.status).toBe(200)
-    
     expect(res.body.name).toEqual('Black parrot')
     expect(res.body.price).toEqual(4)
   })
@@ -112,11 +106,8 @@ describe('flower controller', () => {
     let res = await createFlower()
     expect(res.status).toBe(200)
     const flowerId = res.body._id
-
     res = await request(app).delete(`/flowers/${flowerId}`)
-
     expect(res.status).toEqual(204)
-
     res = await request(app).get(`/flowers/${flowerId}`)
     expect(res.status).toBe(404)
   })

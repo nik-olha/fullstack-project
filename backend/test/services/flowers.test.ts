@@ -72,7 +72,6 @@ describe('flower service', () => {
       name: 'Red head',
       price: 4,
     }
-
     return FlowerService.update(nonExistingFlowerId, update).catch((e) => {
       expect(e.message).toMatch(`Flower ${nonExistingFlowerId} not found`)
     })

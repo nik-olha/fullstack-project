@@ -11,7 +11,6 @@ export const createFlower = async (
 ) => {
   try {
     const { name, price, description, color, imageURL, instock } = req.body
-
     const flower = new Flower({
       name,
       price,
@@ -20,7 +19,6 @@ export const createFlower = async (
       instock,
       imageURL,
     })
-
     await FlowerService.create(flower)
     res.json(flower)
   } catch (error) {

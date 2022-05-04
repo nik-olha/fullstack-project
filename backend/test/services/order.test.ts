@@ -11,9 +11,9 @@ const existingOrderLineId = '6229f8df4f07b73d003e72eb'
 async function createOrder() {
   const order = new Order({
     userId: existingUserId,
-    orderLines:[
-        {_id:existingOrderLineId},
-        {_id:existingOrderLineId}
+    orderLines: [
+      { _id: existingOrderLineId },
+      { _id: existingOrderLineId }
     ],
     totalPrice: 1233
   })
@@ -119,7 +119,7 @@ describe('order service', () => {
   })
 
   // it('should not delete an non-existing order', async () => {
-    
+
   //   return await OrderService.deleteOrderById(existingUserId, nonExistingOrderId).catch(
   //     (e) => {
   //       expect(e.message).toBe(`Order ${nonExistingOrderId} not found`)

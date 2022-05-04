@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 
-import OrderLine from '../models/OrderLine'
+import OrderLine from '../models/orderline'
 import OrderLineService from '../services/orderline'
 import { BadRequestError } from '../helpers/apiError'
 

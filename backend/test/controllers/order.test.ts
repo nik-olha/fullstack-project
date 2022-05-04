@@ -1,10 +1,7 @@
-
-   
 import request from 'supertest'
-
-import { OrderDocument } from '../../models/order'
 import app from '../../app'
 import connect, { MongodHelper } from '../db-helper'
+import { OrderDocument } from '../../models/order'
 
 const nonExistingOrderId = '5e57b77b5744fa0b461c7906'
 const nonExistingUserId = '5e57b77b5744fa0b461c7906'
@@ -15,7 +12,7 @@ const existingOrderLineId = '6229f8df4f07b73d003e72eb'
 async function createOrder(override?: Partial<OrderDocument>) {
   let order = {
     orderLines: [
-      { _id: existingOrderLineId }, 
+      { _id: existingOrderLineId },
       { _id: existingOrderLineId }],
     totalPrice: 123.0,
   }
@@ -79,32 +76,31 @@ describe('order controller', () => {
     expect(res.status).toBe(404)
   })
 
-   it('should not get a existing order with non-existing user', async () => {
-     const res1 = await createOrder({
-       userId: existingUserId,
-    //    orderLines: [],
-       totalPrice: 1231,
-     })
-     const res = await request(app).get(
-       `/orders/${nonExistingUserId}/${res1.body._id}`
-     )
-     expect(res.status).toBe(400)
-   })
+  it('should not get a existing order with non-existing user', async () => {
+    const res1 = await createOrder({
+      userId: existingUserId,
+      //    orderLines: [],
+      totalPrice: 1231,
+    })
+    const res = await request(app).get(
+      `/orders/${nonExistingUserId}/${res1.body._id}`
+    )
+    expect(res.status).toBe(400)
+  })
 
   it('should get back all order', async () => {
     const res1 = await createOrder({
       userId: existingUserId,
-    //   orderLines: [],
+      //   orderLines: [],
       totalPrice: 1231
     })
     const res2 = await createOrder({
       userId: existingUserId,
-    //   orderLines: [],
+      //   orderLines: [],
       totalPrice: 1231,
     })
 
     const res3 = await request(app).get(`/orders/${existingUserId}`)
-
     expect(res3.body.length).toEqual(2)
     expect(res3.body[0]._id).toEqual(res1.body._id)
     expect(res3.body[1]._id).toEqual(res2.body._id)
@@ -113,16 +109,13 @@ describe('order controller', () => {
   it('should update an existing order', async () => {
     let res = await createOrder()
     expect(res.status).toBe(200)
-
     const orderId = res.body._id
     const update = {
       totalPrice: 9991,
     }
-
     res = await request(app)
       .put(`/orders/${existingUserId}/${orderId}`)
       .send(update)
-
     expect(res.status).toEqual(200)
     expect(res.body.totalPrice).toEqual(9991)
   })
@@ -131,13 +124,10 @@ describe('order controller', () => {
     let res = await createOrder()
     expect(res.status).toBe(200)
     const orderId = res.body._id
-
     res = await request(app).delete(
       `/orders/${existingUserId}/${orderId}`
     )
-
     expect(res.status).toEqual(204)
-
     res = await request(app).get(`/orders/${existingUserId}/${orderId}`)
     expect(res.status).toBe(404)
   })

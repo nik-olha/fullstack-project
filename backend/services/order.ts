@@ -31,7 +31,6 @@ const findOrderById = async (
       `Order ${orderId} is not made by this user ${userId}`
     )
   }
-
   return orderToReturn
 }
 
@@ -48,7 +47,6 @@ const updateOrderById = async (
       new: true,
     }
   )
-
   return orderToUpdate
 }
 

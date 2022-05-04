@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-
+import { BadRequestError } from '../helpers/apiError'
 import Order from '../models/Order'
 import OrderService from '../services/order'
-import { BadRequestError } from '../helpers/apiError'
 
 // POST /orders
 export const createOrder = async (

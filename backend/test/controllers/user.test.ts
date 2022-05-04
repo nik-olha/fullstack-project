@@ -1,8 +1,7 @@
 import request from 'supertest'
-
-import { UserDocument as UserDocument } from '../../models/user'
 import app from '../../app'
 import connect, { MongodHelper } from '../db-helper'
+import { UserDocument as UserDocument } from '../../models/user'
 
 const nonExistingUserId = '5e57b77b5744fa0b461c7906'
 let existingToken = ''
@@ -15,11 +14,9 @@ async function createUser(override?: Partial<UserDocument>) {
     password: 'juan123456',
     faworites: [],
   }
-
   if (override) {
     user = { ...user, ...override }
   }
-
   return await request(app).post('/user/create').send(user)
 }
 
@@ -59,10 +56,8 @@ describe('user controller', () => {
   it('should get back an existing user', async () => {
     let res = await createUser()
     expect(res.status).toBe(200)
-
     const userId = res.body._id
     res = await request(app).get(`/user/${userId}`)
-
     expect(res.body._id).toEqual(userId)
   })
 
@@ -71,26 +66,26 @@ describe('user controller', () => {
     expect(res.status).toBe(404)
   })
 
-//   it('should be able to login with existing username', async () => {
-//     const res1 = await createUser({
-//       email: 'leo@gmail.com',
-//       name: 'Leo',
-//       password: '12344321',
-//     })
-//     const res2 = await request(app).post('/users/login').send({
-//       name: 'Leo',
-//       password: '12344321',
-//     })
-//     expect(res1.body._id).toEqual(res2.body.loginUser._id)
-//     expect(res1.body.username).toEqual(res2.body.loginUser.username)
-//     existingToken = res2.body.token
-//   })
-  
+  //   it('should be able to login with existing username', async () => {
+  //     const res1 = await createUser({
+  //       email: 'leo@gmail.com',
+  //       name: 'Leo',
+  //       password: '12344321',
+  //     })
+  //     const res2 = await request(app).post('/users/login').send({
+  //       name: 'Leo',
+  //       password: '12344321',
+  //     })
+  //     expect(res1.body._id).toEqual(res2.body.loginUser._id)
+  //     expect(res1.body.username).toEqual(res2.body.loginUser.username)
+  //     existingToken = res2.body.token
+  //   })
+
   it('should get back all users', async () => {
     const res1 = await createUser({
-        name: 'Julia',
-        email: 'julia@gmail.com',
-        password: 'julia123456',
+      name: 'Julia',
+      email: 'julia@gmail.com',
+      password: 'julia123456',
     })
     const res2 = await createUser()
     console.log(res2.body)
@@ -107,16 +102,15 @@ describe('user controller', () => {
   it('should update an existing user', async () => {
     let res = await createUser()
     expect(res.status).toBe(200)
-
     const userId = res.body._id
     const update = {
-        name: 'Juan2',
-        password: 'juan323232',
+      name: 'Juan2',
+      password: 'juan323232',
     }
 
     res = await request(app).put(`/user/${userId}`).send(update)
     expect(res.status).toBe(200)
-    
+
     expect(res.body.name).toEqual('Juan2')
     expect(res.body.password).toEqual('juan323232')
   })

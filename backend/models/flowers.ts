@@ -5,7 +5,7 @@ export type FlowerDocument = Document & {
     price: number
     color: string
     description: string
-    instock: number 
+    instock: number
     imageURL: string
 }
 

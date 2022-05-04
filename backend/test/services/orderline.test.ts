@@ -6,7 +6,7 @@ const nonExistingOrderLineId = '5e57b77b5744fa0b461c7906'
 
 //! Insert existing productId in order to test or create a product here
   
-const existingProductId = '624d6650999c5954c9e9e4be '
+const existingProductId = '624d6650999c5954c9e9e4be'
 
 async function createOrderLine() {
   const orderLine = new OrderLine({

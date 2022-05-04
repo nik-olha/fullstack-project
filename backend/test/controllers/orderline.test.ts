@@ -1,11 +1,9 @@
 import request from 'supertest'
-
-import { OrderLineDocument } from '../../models/orderline'
 import app from '../../app'
 import connect, { MongodHelper } from '../db-helper'
+import { OrderLineDocument } from '../../models/orderline'
 
 const nonExistingOrderLineId = '5e57b77b5744fa0b461c7906'
-
 const existingProductId = '6229f8c14f07b73d003e72e6'
 
 async function createOrderLine(override?: Partial<OrderLineDocument>) {
@@ -13,11 +11,9 @@ async function createOrderLine(override?: Partial<OrderLineDocument>) {
     quantity: 4,
     price: 2.99,
   }
-
   if (override) {
     orderLine = { ...orderLine, ...override }
   }
-
   return await request(app)
     .post(`/orderLines/${existingProductId}`)
     .send(orderLine)
@@ -56,10 +52,8 @@ describe('orderLine controller', () => {
   it('should get back an existing orderLine', async () => {
     let res = await createOrderLine()
     expect(res.status).toBe(200)
-
     const orderLineId = res.body._id
     res = await request(app).get(`/orderLines/${orderLineId}`)
-
     expect(res.body._id).toEqual(orderLineId)
   })
 
@@ -79,9 +73,7 @@ describe('orderLine controller', () => {
       quantity: 3,
       price: 6.99,
     })
-
     // const res3 = await request(app).get('/orderLines')
-
     // expect(res3.body.length).toEqual(2)
     // expect(res3.body[0]._id).toEqual(res1.body._id)
     // expect(res3.body[1]._id).toEqual(res2.body._id)
@@ -94,11 +86,9 @@ describe('orderLine controller', () => {
     const update = {
       productId: '6229f8c14c07b73d003e72e6',
     }
-
     res = await request(app)
       .put(`/orderLines/${orderLineId}`)
       .send(update)
-
     expect(res.status).toEqual(200)
     // expect(res.body.productId).toEqual('6229f8c14c07b73d003e72e6')
   })
@@ -107,11 +97,8 @@ describe('orderLine controller', () => {
     let res = await createOrderLine()
     expect(res.status).toBe(200)
     const orderLineId = res.body._id
-
     res = await request(app).delete(`/orderLines/${orderLineId}`)
-
     expect(res.status).toEqual(204)
-
     res = await request(app).get(`/orderLines/${orderLineId}`)
     expect(res.status).toBe(404)
   })

@@ -2,9 +2,12 @@ POST http://localhost:3000/flowers/create HTTP/1.1
 Content-Type: application/json
 
 {
-	"name": "Tulip5",
-	"price": 2,
-	"instock": 4
+	"name": "Red see",
+    "price": 2,
+    "color": "scarlet",
+    "description": "Flower of the month",
+    "instock": 500,
+    "imageURL": "https://res.cloudinary.com/dxlba6g7m/image/upload/v1651674438/red_s89dax.jpg"
 }
 
 ###
